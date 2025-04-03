@@ -113,7 +113,3 @@ User will now try to use their own AI model to handle error for various settings
 - Correction of typos
 - Synonyms semantic matching
 - etc...
-
-## License
-
-This project is open source and available under the MIT License. 

@@ -107,7 +107,7 @@ The metrics show:
 - Lower scores for `diagnosis` and `assay` columns due to text variations
 - Overall high performance (0.9) across all columns
 
-## User challenges for each errors
+## User challenges for each errors: Work in Progress
 
 User will now try to use their own AI model to handle error for various settings:
 - Correction of typos

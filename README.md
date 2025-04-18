@@ -107,9 +107,37 @@ The metrics show:
 - Lower scores for `diagnosis` and `assay` columns due to text variations
 - Overall high performance (0.9) across all columns
 
-## User challenges for each errors: Work in Progress
 
-User will now try to use their own AI model to handle error for various settings:
-- Correction of typos
-- Synonyms semantic matching
-- etc...
+## Ideas from the BioRxiv Semantic‑Matching Paper
+
+https://arxiv.org/pdf/2412.08194
+
+1. **Hybrid SLM + LLM Workflow**  
+   - Leverage a small LM for a fast “broad brush” retrieval of candidate column matches (via cosine similarity), then use an LLM to rerank only the top K—cutting down on compute cost while preserving deep semantic understanding.
+2. **Self‑Supervised Fine‑Tuning**  
+   - Prompt a large model to generate realistic “fake” schema variants (renames, value shuffles, injected noise) and train the small model contrastively. No need for hand‑labeled pairs, yet you still capture domain‑specific quirks.
+3. **Scalable, Domain‑Aware Filtering**  
+   - The two‑phase design mirrors search engines (coarse recall → fine precision), so you can scale to hundreds of columns without blowing up your LLM bills.
+4. **Normalized Similarity Scores → Confidence Scores**  
+   - They report match strengths as 0.00–1.00 “similarity scores.” We can extend this idea into **confidence scores** on multiple axes, e.g.:
+
+   | Criterion               | Example Confidence Question                                                         |
+   |-------------------------|-------------------------------------------------------------------------------------|
+   | Name Consistency        | “How closely do the two column names align in meaning and formatting?”              |
+   | Vocabulary Overlap      | “Do the cell values share key domain terms, synonyms, or ontological labels?”       |
+   | Distribution Alignment  | “How similar are the value distributions (types, ranges, frequency) between columns?”|
+   | Contextual Coherence    | “Do sampled values, when read in context, convey the same semantic category?”       |
+   | Noise Robustness        | “Can the model correctly match despite typos, abbreviations, or inconsistent casing?”|
+
+5. **Actionable Takeaway**  
+   - This paper offers a proven blueprint if you want to build a semantic‑matching layer atop your table‑evaluation tool—just swap in your own confidence‑criteria questions and you’re set.
+
+## User Challenges for Each Error: _Work in Progress_
+
+Users will now try to use their own AI model to handle errors in various settings:
+- **Typo Correction**  
+- **Synonym & Semantic Matching**  
+- **Abbreviation Expansion**  
+- **Value‑Distribution Checking**  
+- **Context‑Driven Disambiguation**  
+- _…and more to come!_  
